@@ -19,7 +19,7 @@ body {
 }
 
 .content {
-    background-color: #1164b7;
+    background-color: #9b9bd3;
 }
 
 .card {
@@ -31,7 +31,7 @@ body {
 }
 
 .card-text {
-    color: #3c2ba5;
+    color: #897fcf;
 }
 
 .btn {
@@ -39,7 +39,7 @@ body {
 }
 
 .filters {
-    background-color: #3c17e4;
+    background-color: #6b5bb4;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);

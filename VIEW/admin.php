@@ -10,32 +10,32 @@
 <body>
     <div id="app" class="d-flex">
         <!-- Sidebar -->
-        <nav class="sidebar bg-dark text-white p-3">
+        <nav class="sidebar bg-blue text-white p-3">
             <div class="sidebar-header">
                 <img src="logo.png" alt="Logo" class="img-fluid">
             </div>
             <ul class="nav flex-column">
-                <li class="nav-item">
+                <button class="nav-item">
                     <a href="#" class="nav-link text-white">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Items</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Categories</a>
-                </li>
-                <li class="nav-item">
+                </button>
+                <button class="nav-item">
+                    <a href="#" class="nav-link text-white">Menu Items</a>
+                </button>
+                <button class="nav-item">
+                    <a href="#" class="nav-link text-white">Employee</a>
+                </button>
+                <button class="nav-item">
                     <a href="#" class="nav-link text-white">Modifiers</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white">Menu</a>
-                </li>
-                <li class="nav-item">
+                </button>
+                <button class="nav-item">
+                    <a href="#" class="nav-link text-white">Settings</a>
+                </button>
+                <button class="nav-item">
                     <a href="#" class="nav-link text-white">Orders</a>
-                </li>
-                <li class="nav-item">
+               <!--</button>
+                <button class="nav-item">
                     <a href="#" class="nav-link text-white">Offers/Coupons</a>
-                </li>
+                </button>-->
             </ul>
         </nav>
 
