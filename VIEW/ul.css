@@ -1,6 +1,6 @@
 body {
-    background-color: #4B4BFF;
-    color: rgb(83, 17, 225);
+    background-color: #4848ff;
+    color: rgb(14, 14, 15);
 }
 body, html {
     height: 100%;
@@ -8,7 +8,7 @@ body, html {
 }
 
 .background-image {
-   background-image: url('blue.jpeg');
+  
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -35,16 +35,13 @@ p {
 .btn-primary {
     background-color: #4B4BFF;
     border: none;
+    border-radius: 25px;
+    padding: 1rem;
 }
 
-.btn-secondary {
-    background-color: #6C6CFF;
-    border: none;
-}
 
-.social-buttons .btn {
-    border-color: white;
-}
+
+
 
 .form-control {
     background-color: #FFF;

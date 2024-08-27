@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div id="app" class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <h4 class="text-center">Restaurant Admin</h4>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" :class="{ active: isActive('dashboard') }" @click="setActive('dashboard')" href="#">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" :class="{ active: isActive('orders') }" @click="setActive('orders')" href="#">
+                                Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" :class="{ active: isActive('menu') }" @click="setActive('menu')" href="#">
+                                Menu Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" :class="{ active: isActive('staff') }" @click="setActive('staff')" href="#">
+                                Staff Management
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" :class="{ active: isActive('reports') }" @click="setActive('reports')" href="#">
+                                Reports
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" :class="{ active: isActive('settings') }" @click="setActive('settings')" href="#">
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main role="main" class="col-md-10 ml-sm-auto px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
+
+                <div class="row">
+                    <!-- Widget 1 -->
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Total Orders</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">{{ totalOrders }} <small class="text-muted">orders</small></h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Widget 2 -->
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Revenue</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">${{ revenue }} <small class="text-muted">USD</small></h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Widget 3 -->
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">Staff Online</h4>
+                            </div>
+                            <div class="card-body">
+                                <h1 class="card-title pricing-card-title">{{ staffOnline }} <small class="text-muted">staff</small></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Vue.js Application -->
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                activeSection: 'dashboard',
+                totalOrders: 150,
+                revenue: 5000,
+                staffOnline: 8
+            },
+            methods: {
+                setActive(section) {
+                    this.activeSection = section;
+                },
+                isActive(section) {
+                    return this.activeSection === section;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
