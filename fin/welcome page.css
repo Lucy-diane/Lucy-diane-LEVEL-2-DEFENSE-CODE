@@ -1,0 +1,126 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f5; /* Softer background */
+    font-family: 'Helvetica Neue', sans-serif;
+}
+
+.interface {
+    height: 100vh; /* Slightly smaller height */
+    width: 200vw; /* Less width for better fit */
+    display: flex;
+    background-color: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Softer shadow */
+}
+
+.menu {
+    width: 25%;
+    background-color: #4B4BFF;
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /* More padding for spacious look */
+    box-sizing: border-box;
+   ;
+}
+
+.menu button {
+    display: flex;
+    flex-direction: center;
+    background-color: #1a33c1;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Added shadow */
+}
+
+.menu button:hover {
+    background-color: #85ACD5;
+    transform: translateY(-5px); /* Larger hover effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Deepen shadow */
+}
+
+.content {
+    flex-grow: 1;
+    position: relative;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
+}
+
+.image-container:hover {
+    transform: scale(1.03); /* Slight scale on hover */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.food-name {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(182, 10, 28, 0.9);
+    padding: 12px 25px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px; /* Slightly larger radius */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Add shadow to text box */
+}
+
+@media (max-width: 768px) {
+    .interface {
+        flex-direction: column;
+        height: auto;
+        width: 100vw;
+    }
+
+    .menu {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .menu button {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .food-name {
+        font-size: 20px;
+        padding: 8px 15px;
+    }
+}
+
+.menu button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
