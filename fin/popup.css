@@ -1,0 +1,45 @@
+.order-popup {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+    height: auto;
+    max-height: 80vh;
+    background-color: #f9f9f9;
+    box-shadow: -2px 0 15px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    transition: right 0.3s ease-in-out;
+    padding: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+    cursor: move;
+}
+
+.order-popup h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.order-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.submit-order {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-order:hover {
+    background-color: #2471a3;
+}
