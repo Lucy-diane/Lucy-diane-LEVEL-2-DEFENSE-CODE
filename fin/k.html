@@ -77,9 +77,11 @@
         <button onclick="addCustomizedToOrder()">Add to Order</button>
     </div>
     <script>
+        // Variables to hold the current dish for customization and the list of ordered items
         let currentDish = null;
         let orderItems = [];
     
+        // Arrays containing popular dishes and recent orders with name and price
         const popularDishes = [
             { name: 'Burger Deluxe', price: 10 },
             { name: 'Chicken Wings', price: 8 },
@@ -91,13 +93,16 @@
             { name: 'Spaghetti', price: 11 },
         ];
     
+        // Function to render dishes (both popular and recent) on the page
         function renderDishes() {
             const popularDishesContainer = document.getElementById('popularDishes');
             const recentOrderContainer = document.getElementById('recentOrder');
     
+            // Clear the containers
             popularDishesContainer.innerHTML = '';
             recentOrderContainer.innerHTML = '';
     
+            // Render popular dishes
             popularDishes.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -107,6 +112,7 @@
                 popularDishesContainer.innerHTML += dishCard;
             });
     
+            // Render recent orders
             recentOrder.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -117,9 +123,12 @@
             });
         }
     
+        // Function to open the customization popup for a selected dish
         function openCustomizationPopup(dishName, price) {
-            currentDish = { name: dishName, price: price };
-            document.getElementById('customizationPopup').style.display = 'block';
+            currentDish = { name: dishName, price: price }; // Set the current dish details
+            document.getElementById('customizationPopup').style.display = 'block'; // Show the customization popup
+            
+            // Populate customization options (e.g., toppings)
             const optionsContainer = document.getElementById('customizationOptions');
             optionsContainer.innerHTML = `<div class="customization-option">
                                              <label>Toppings:</label><br>
@@ -129,25 +138,37 @@
                                          </div>`;
         }
     
+        // Function to close the customization popup
         function closeCustomizationPopup() {
-            document.getElementById('customizationPopup').style.display = 'none';
+            document.getElementById('customizationPopup').style.display = 'none'; // Hide the popup
         }
     
+        // Function to add a customized dish to the order
         function addCustomizedToOrder() {
+            // Get the selected toppings
             const selectedToppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked')).map(el => el.value);
+            
+            // Create a custom dish object with selected toppings
             const customDish = { ...currentDish, toppings: selectedToppings };
+            
+            // Add the custom dish to the order
             orderItems.push(customDish);
     
+            // Update the order popup and cart notification
             updateOrderPopup();
             updateCartNotification();
+            
+            // Close the customization popup
             closeCustomizationPopup();
         }
     
+        // Function to update the order popup with current items
         function updateOrderPopup() {
             const orderPopup = document.getElementById('orderPopup');
             const orderItemsContainer = document.getElementById('orderItems');
             let orderHTML = '';
     
+            // Create HTML for each ordered item
             orderItems.forEach(item => {
                 orderHTML += `<div class="order-item">
                                 <h4>${item.name}</h4>
@@ -156,36 +177,46 @@
                               </div>`;
             });
     
+            // Update the order items container with the new HTML
             orderItemsContainer.innerHTML = orderHTML;
-            orderPopup.classList.add('show');
+            orderPopup.classList.add('show'); // Show the order popup
         }
     
+        // Function to update the cart notification with the number of items
         function updateCartNotification() {
             const cartNotification = document.getElementById('cartNotification');
-            cartNotification.textContent = orderItems.length;
+            cartNotification.textContent = orderItems.length; // Set the text content to the number of items
         }
     
+        // Function to submit the order
         function submitOrder() {
-            orderItems = [];
-            updateCartNotification();
-            alert('Order submitted successfully!');
+            orderItems = []; // Clear the order items
+            updateCartNotification(); // Update the cart notification
+            alert('Order submitted successfully!'); // Show an alert to the user
         }
     
+        // Function to filter dishes based on user input in the search bar
         function filterDishes() {
-            const query = document.getElementById('searchBar').value.toLowerCase();
+            const query = document.getElementById('searchBar').value.toLowerCase(); // Get the search query
+            
+            // Filter popular and recent dishes by the query
             const filteredPopularDishes = popularDishes.filter(dish => dish.name.toLowerCase().includes(query));
             const filteredRecentOrder = recentOrder.filter(dish => dish.name.toLowerCase().includes(query));
     
+            // Render the filtered dishes
             renderFilteredDishes(filteredPopularDishes, filteredRecentOrder);
         }
     
+        // Function to render filtered dishes after search
         function renderFilteredDishes(filteredPopularDishes, filteredRecentOrder) {
             const popularDishesContainer = document.getElementById('popularDishes');
             const recentOrderContainer = document.getElementById('recentOrder');
     
+            // Clear the containers
             popularDishesContainer.innerHTML = '';
             recentOrderContainer.innerHTML = '';
     
+            // Render filtered popular dishes
             filteredPopularDishes.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -195,6 +226,7 @@
                 popularDishesContainer.innerHTML += dishCard;
             });
     
+            // Render filtered recent orders
             filteredRecentOrder.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -205,10 +237,13 @@
             });
         }
     
+        // Event listeners for search bar input and order submission
         document.getElementById('searchBar').addEventListener('input', filterDishes);
         document.querySelector('.submit-order').addEventListener('click', submitOrder);
     
+        // Call renderDishes function when the window loads
         window.onload = renderDishes;
-    </script>
+</script>
+
 </body>
 </html> 
