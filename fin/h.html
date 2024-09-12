@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant POS - Waiter Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Enhanced CSS for styling the waiter POS interface */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar nav a {
+            display: block;
+            padding: 10px;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .sidebar nav a:hover {
+            background-color: #ddd;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+
+        .table-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .table {
+            padding: 20px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .table.occupied {
+            background-color: #ff9999;
+        }
+
+        .table.available {
+            background-color: #99ff99;
+        }
+
+        .table.reserved {
+            background-color: #ffff99;
+        }
+
+        .order-section, .menu-section {
+            margin-top: 20px;
+        }
+
+        .order-list, .menu-list {
+            margin-top: 20px;
+        }
+
+        .order-item, .menu-item {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-item button, .order-item button {
+            padding: 5px;
+            margin-left: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+        }
+
+        .modal-content button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Restaurant POS</h1>
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <nav>
+            <a href="#table-view" onclick="showSection('table-view')">Table View</a>
+            <a href="#orders" onclick="showSection('orders')">Orders</a>
+            <a href="#menu" onclick="showSection('menu')">Menu</a>
+            <a href="#settings" onclick="showSection('settings')">Settings</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Table View Section -->
+        <div id="table-view" class="section">
+            <h2>Table View</h2>
+            <div class="table-view">
+                <div class="table available" onclick="selectTable(1)">Table 1</div>
+                <div class="table occupied" onclick="selectTable(2)">Table 2</div>
+                <div class="table reserved" onclick="selectTable(3)">Table 3</div>
+                <!-- Add more tables as needed -->
+            </div>
+        </div>
+
+        <!-- Order Section -->
+        <div id="orders" class="section" style="display: none;">
+            <h2>Orders</h2>
+            <div class="order-section">
+                <h3>Order for Table 1</h3>
+                <div class="order-list" id="order-list">
+                    <!-- Order items will be dynamically populated here -->
+                </div>
+                <button onclick="openModal('addItemModal')">Add Item</button>
+            </div>
+        </div>
+
+        <!-- Menu Section -->
+        <div id="menu" class="section" style="display: none;">
+            <h2>Menu</h2>
+            <input type="text" id="menuSearch" placeholder="Search Menu..." onkeyup="filterMenu()">
+            <div class="menu-list" id="menu-list">
+                <!-- Menu items will be dynamically populated here -->
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="addItemModal" class="modal">
+            <div class="modal-content">
+                <h3>Add Item</h3>
+                <select id="menuItemsDropdown">
+                    <!-- Options will be dynamically populated -->
+                </select>
+                <button onclick="addItemToOrder()">Add</button>
+                <button onclick="closeModal('addItemModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle UI interactions
+
+        const menuItems = [
+            { id: 1, name: 'Burger', price: 10 },
+            { id: 2, name: 'Fries', price: 5 },
+            { id: 3, name: 'Pizza', price: 15 },
+            { id: 4, name: 'Salad', price: 7 }
+        ];
+
+        let currentOrder = [];
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+            if (sectionId === 'menu') {
+                loadMenuItems();
+            }
+        }
+
+        function selectTable(tableNumber) {
+            alert('Table ' + tableNumber + ' selected.');
+            showSection('orders');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+            populateMenuDropdown();
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function populateMenuDropdown() {
+            const dropdown = document.getElementById('menuItemsDropdown');
+            dropdown.innerHTML = '';
+            menuItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = `${item.name} - $${item.price}`;
+                dropdown.appendChild(option);
+            });
+        }
+
+        function addItemToOrder() {
+            const selectedItemId = document.getElementById('menuItemsDropdown').value;
+            const selectedItem = menuItems.find(item => item.id == selectedItemId);
+            currentOrder.push(selectedItem);
+            updateOrderList();
+            closeModal('addItemModal');
+        }
+
+        function updateOrderList() {
+            const orderList = document.getElementById('order-list');
+            orderList.innerHTML = '';
+            currentOrder.forEach((item, index) => {
+                const orderItem = document.createElement('div');
+                orderItem.classList.add('order-item');
+                orderItem.innerHTML = `
+                    ${item.name} - $${item.price}
+                    <button onclick="removeOrderItem(${index})">Remove</button>
+                `;
+                orderList.appendChild(orderItem);
+            });
+        }
+
+        function removeOrderItem(index) {
+            currentOrder.splice(index, 1);
+            updateOrderList();
+        }
+
+        function loadMenuItems() {
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = '';
+            menuItems.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.classList.add('menu-item');
+                menuItem.innerHTML = `
+                    ${item.name} - $${item.price}
+                    <button onclick="addItemFromMenu(${item.id})">Add to Order</button>
+                `;
+                menuList.appendChild(menuItem);
+            });
+        }
+
+        function addItemFromMenu(itemId) {
+            const selectedItem = menuItems.find(item => item.id === itemId);
+            currentOrder.push(selectedItem);
+            updateOrderList();
+        }
+
+        function filterMenu() {
+            const searchQuery = document.getElementById('menuSearch').value.toLowerCase();
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = '';
+            menuItems.filter(item => item.name.toLowerCase().includes(searchQuery)).forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.classList.add('menu-item');
+                menuItem.innerHTML = `
+                    ${item.name} - $${item.price}
+                    <button onclick="addItemFromMenu(${item.id})">Add to Order</button>
+                `;
+                menuList.appendChild(menuItem);
+            });
+        }
+
+        function logout() {
+            alert('Logging out...');
+        }
+
+        // Initial load
+        showSection('table-view');
+    </script>
+</body>
+
+</html>
