@@ -3,65 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoodMeal</title>
-    <link rel="stylesheet" href="order meal.css">
-    <style>
-        /* Add some basic styles for visibility */
-        .cart-notification {
-            display: inline-block;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px;
-            font-size: 12px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-    </style>
+    <title>FoodMeal POS</title>
+    <link rel="stylesheet" href="order m.css">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">FoodMeal</div>
-        <div class="menu-item"><i>🏠</i> Dashboard</div>
-        <div class="menu-item"><i>🍔</i> Food Order</div>
-        <div class="menu-item"><i>❤️</i> Favorite</div>
-        <div class="menu-item"><i>💬</i> Message</div>
-        <div class="menu-item"><i>📜</i> Order History</div>
-        <div class="menu-item"><i>💰</i> Bills</div>
-        <div class="menu-item"><i>⚙️</i> Setting</div>
-        <div class="upgrade-box">
-            <div>Upgrade your Account to Get Free Voucher</div>
-            <button class="upgrade-btn">Upgrade</button>
-        </div>
+    <!-- Sidebar with menu items -->
+    <div class="sidebar" id="sidebar">
+        <div class="menu-item" onclick="toggleSidebar()"><i>☰</i></div>
+        <div class="menu-item"><i>🏠</i><span>Dashboard</span></div>
+        <div class="menu-item"><i>🍔</i><span>Food Order</span></div>
+        <div class="menu-item"><i>❤️</i><span>Favorite</span></div>
+        <div class="menu-item"><i>💬</i><span>Message</span></div>
+        <div class="menu-item"><i>📜</i><span>Order History</span></div>
+        <div class="menu-item"><i>💰</i><span>Bills</span></div>
+        <div class="menu-item"><i>⚙️</i><span>Setting</span></div>
     </div>
-    <div class="main-content">
+    <!-- Main content area -->
+    <div class="main-content" id="mainContent">
         <div class="header">
-            <h2>Hey, Zack</h2>
-            <div class="cart-icon" style="position: relative;">
+            <input type="text" id="searchBar" class="search-bar" placeholder="Search for meals...">
+            <div class="cart-icon" onclick="toggleOrderPopup()">
                 🛒
                 <div class="cart-notification" id="cartNotification">0</div>
             </div>
         </div>
-        <input type="text" class="search-bar" id="searchBar" placeholder="Search for meals...">
         <div class="banner">
-            <h3>Get Discount Voucher Up To 20%</h3>
-            <p>Order any food from the app and get discount</p>
+            <h3>Get Dessert FOR FREE!</h3>
+            <p>Make your first order for $10 and get dessert from our bakery for free!</p>
         </div>
-        <div class="category-icons">
-            <div class="category-icon">🍳 Bakery</div>
-            <div class="category-icon">🍔 Burger</div>
-            <div class="category-icon">🍵 Beverage</div>
-            <div class="category-icon">🍗 Chicken</div>
-            <div class="category-icon">🍕 Pizza</div>
-            <div class="category-icon">🍣 Seafood</div>
-        </div>
-        <h3>Popular Dishes</h3>
+        <h3>Restaurants</h3>
         <div class="dishes-grid" id="popularDishes"></div>
-        <h3>Recent Order</h3>
+        <h3>Recently Ordered</h3>
         <div class="dishes-grid" id="recentOrder"></div>
     </div>
 
+    <!-- Order Popup -->
     <div class="order-popup" id="orderPopup">
         <h3>My order</h3>
         <div id="orderItems"></div>
@@ -76,33 +52,29 @@
         <div id="customizationOptions"></div>
         <button onclick="addCustomizedToOrder()">Add to Order</button>
     </div>
+
     <script>
-        // Variables to hold the current dish for customization and the list of ordered items
         let currentDish = null;
         let orderItems = [];
-    
-        // Arrays containing popular dishes and recent orders with name and price
+
         const popularDishes = [
             { name: 'Burger Deluxe', price: 10 },
             { name: 'Chicken Wings', price: 8 },
             { name: 'Pepperoni Pizza', price: 12 }
         ];
-    
+
         const recentOrder = [
             { name: 'Caesar Salad', price: 6 },
-            { name: 'Spaghetti', price: 11 },
+            { name: 'Spaghetti', price: 11 }
         ];
-    
-        // Function to render dishes (both popular and recent) on the page
+
         function renderDishes() {
             const popularDishesContainer = document.getElementById('popularDishes');
             const recentOrderContainer = document.getElementById('recentOrder');
-    
-            // Clear the containers
+
             popularDishesContainer.innerHTML = '';
             recentOrderContainer.innerHTML = '';
-    
-            // Render popular dishes
+
             popularDishes.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -111,8 +83,7 @@
                                 </div>`;
                 popularDishesContainer.innerHTML += dishCard;
             });
-    
-            // Render recent orders
+
             recentOrder.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -122,13 +93,11 @@
                 recentOrderContainer.innerHTML += dishCard;
             });
         }
-    
-        // Function to open the customization popup for a selected dish
+
         function openCustomizationPopup(dishName, price) {
-            currentDish = { name: dishName, price: price }; // Set the current dish details
-            document.getElementById('customizationPopup').style.display = 'block'; // Show the customization popup
+            currentDish = { name: dishName, price: price };
+            document.getElementById('customizationPopup').style.display = 'block';
             
-            // Populate customization options (e.g., toppings)
             const optionsContainer = document.getElementById('customizationOptions');
             optionsContainer.innerHTML = `<div class="customization-option">
                                              <label>Toppings:</label><br>
@@ -137,38 +106,25 @@
                                              <input type="checkbox" name="toppings" value="Lettuce"> Lettuce
                                          </div>`;
         }
-    
-        // Function to close the customization popup
+
         function closeCustomizationPopup() {
-            document.getElementById('customizationPopup').style.display = 'none'; // Hide the popup
+            document.getElementById('customizationPopup').style.display = 'none';
         }
-    
-        // Function to add a customized dish to the order
+
         function addCustomizedToOrder() {
-            // Get the selected toppings
             const selectedToppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked')).map(el => el.value);
-            
-            // Create a custom dish object with selected toppings
             const customDish = { ...currentDish, toppings: selectedToppings };
-            
-            // Add the custom dish to the order
             orderItems.push(customDish);
-    
-            // Update the order popup and cart notification
+
             updateOrderPopup();
             updateCartNotification();
-            
-            // Close the customization popup
             closeCustomizationPopup();
         }
-    
-        // Function to update the order popup with current items
+
         function updateOrderPopup() {
-            const orderPopup = document.getElementById('orderPopup');
             const orderItemsContainer = document.getElementById('orderItems');
             let orderHTML = '';
-    
-            // Create HTML for each ordered item
+
             orderItems.forEach(item => {
                 orderHTML += `<div class="order-item">
                                 <h4>${item.name}</h4>
@@ -176,47 +132,39 @@
                                 <p>Price: $${item.price}</p>
                               </div>`;
             });
-    
-            // Update the order items container with the new HTML
+
             orderItemsContainer.innerHTML = orderHTML;
-            orderPopup.classList.add('show'); // Show the order popup
+            document.getElementById('orderPopup').classList.add('show');
         }
-    
-        // Function to update the cart notification with the number of items
+
         function updateCartNotification() {
             const cartNotification = document.getElementById('cartNotification');
-            cartNotification.textContent = orderItems.length; // Set the text content to the number of items
+            cartNotification.textContent = orderItems.length;
+            cartNotification.style.display = orderItems.length > 0 ? 'block' : 'none';
         }
-    
-        // Function to submit the order
+
         function submitOrder() {
-            orderItems = []; // Clear the order items
-            updateCartNotification(); // Update the cart notification
-            alert('Order submitted successfully!'); // Show an alert to the user
+            orderItems = [];
+            updateCartNotification();
+            alert('Order submitted successfully!');
         }
-    
-        // Function to filter dishes based on user input in the search bar
+
         function filterDishes() {
-            const query = document.getElementById('searchBar').value.toLowerCase(); // Get the search query
-            
-            // Filter popular and recent dishes by the query
+            const query = document.getElementById('searchBar').value.toLowerCase();
+
             const filteredPopularDishes = popularDishes.filter(dish => dish.name.toLowerCase().includes(query));
             const filteredRecentOrder = recentOrder.filter(dish => dish.name.toLowerCase().includes(query));
-    
-            // Render the filtered dishes
+
             renderFilteredDishes(filteredPopularDishes, filteredRecentOrder);
         }
-    
-        // Function to render filtered dishes after search
+
         function renderFilteredDishes(filteredPopularDishes, filteredRecentOrder) {
             const popularDishesContainer = document.getElementById('popularDishes');
             const recentOrderContainer = document.getElementById('recentOrder');
-    
-            // Clear the containers
+
             popularDishesContainer.innerHTML = '';
             recentOrderContainer.innerHTML = '';
-    
-            // Render filtered popular dishes
+
             filteredPopularDishes.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -225,8 +173,7 @@
                                 </div>`;
                 popularDishesContainer.innerHTML += dishCard;
             });
-    
-            // Render filtered recent orders
+
             filteredRecentOrder.forEach(dish => {
                 let dishCard = `<div class="dish-card" onclick="openCustomizationPopup('${dish.name}', ${dish.price})">
                                     <h4>${dish.name}</h4>
@@ -236,14 +183,24 @@
                 recentOrderContainer.innerHTML += dishCard;
             });
         }
-    
-        // Event listeners for search bar input and order submission
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('expanded');
+            mainContent.classList.toggle('expanded');
+        }
+
+        function toggleOrderPopup() {
+            const orderPopup = document.getElementById('orderPopup');
+            orderPopup.classList.toggle('show');
+        }
+
         document.getElementById('searchBar').addEventListener('input', filterDishes);
         document.querySelector('.submit-order').addEventListener('click', submitOrder);
-    
-        // Call renderDishes function when the window loads
+
         window.onload = renderDishes;
-</script>
+    </script>
 
 </body>
-</html> 
+</html>

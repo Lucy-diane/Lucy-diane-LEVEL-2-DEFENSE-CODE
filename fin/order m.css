@@ -1,0 +1,194 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    display: flex; /* Use flexbox for layout */
+    background-color: #f4f4f9;
+    color: #333;
+}
+.sidebar {
+    background: #34495e; /* Sidebar color */
+    color: white;
+    width: 70px; /* Initial width of sidebar */
+    position: fixed; /* Fix sidebar position */
+    top: 0;
+    left: 0;
+    height: 100%;
+    font-size: 18px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease-in-out; /* Animation for expanding */
+    overflow: hidden; /* Hide overflow content */
+}
+.sidebar.expanded {
+    width: 250px; /* Expanded width */
+}
+.menu-item {
+    padding: 20px;
+    text-align: center; /* Center menu items */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover effects */
+    white-space: nowrap; /* Prevent text wrap */
+    overflow: hidden;
+}
+.menu-item i {
+    display: block;
+    font-size: 24px; /* Icon size */
+    margin-bottom: 10px;
+}
+.menu-item span {
+    display: none; /* Hide text initially */
+}
+.sidebar.expanded .menu-item span {
+    display: inline; /* Show text when expanded */
+}
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Hover effect */
+}
+.main-content {
+    margin-left: 70px; /* Initial margin for content */
+    padding: 20px;
+    width: calc(100% - 70px); /* Adjust width based on sidebar */
+    transition: margin-left 0.3s ease-in-out; /* Smooth transition */
+}
+.main-content.expanded {
+    margin-left: 250px; /* Adjust margin when sidebar expands */
+    width: calc(100% - 250px);
+}
+.header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between; /* Align items */
+    align-items: center;
+    flex-wrap: wrap; /* Allow items to wrap */
+}
+.search-bar {
+    padding: 10px 15px;
+    border-radius: 25px; /* Rounded search bar */
+    border: 2px solid #2980b9; /* Search bar border */
+    width: 100%;
+    max-width: 300px; /* Max width */
+    margin-bottom: 10px;
+}
+.cart-icon {
+    position: relative; /* Relative position for notification */
+    font-size: 24px;
+    cursor: pointer;
+}
+.cart-notification {
+    position: absolute; /* Absolute position for notification */
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: none; /* Hide by default */
+}
+.banner {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+}
+.dishes-grid {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Gap between grid items */
+}
+.dish-card {
+    background-color: #fff;
+    border-radius: 15px; /* Rounded corners */
+    overflow: hidden;
+    transition: all 0.3s ease; /* Smooth transition */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Shadow */
+    cursor: pointer;
+    padding: 15px;
+    text-align: center; /* Center content */
+}
+.dish-card img {
+    width: 100%; /* Full width */
+    height: 150px; /* Fixed height */
+    object-fit: cover; /* Cover the area */
+    border-radius: 10px; /* Rounded image corners */
+}
+.add-btn {
+    background-color: #2980b9; /* Button color */
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px; /* Rounded button */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover */
+}
+.add-btn:hover {
+    background-color: #2471a3; /* Hover effect */
+}
+.customization-popup {
+    display: none; /* Hide by default */
+    position: fixed; /* Fixed position for popup */
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0); /* Center the popup */
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Shadow */
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%; /* Responsive */
+}
+.customization-option {
+    margin: 15px 0;
+}
+.close-popup {
+    position: absolute; /* Absolute positioning */
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.order-popup {
+    position: fixed; /* Fixed order popup */
+    right: -300px; /* Start hidden */
+    top: 60px;
+    width: 300px; /* Width */
+    height: 50vh; /* Height */
+    background-color: #ffffff;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1); /* Shadow */
+    transition: right 0.3s ease-in-out; /* Slide in/out */
+    padding: 20px;
+    overflow-y: auto; /* Enable scroll */
+}
+.order-popup.show {
+    right: 0; /* Show the popup */
+}
+@media (max-width: 768px) {
+    .header {
+        justify-content: center; /* Center header */
+    }
+    .main-content {
+        margin-left: 0; /* Adjust margin */
+        width: 100%;
+    }
+    .main-content.expanded {
+        margin-left: 0;
+        width: 100%;
+    }
+    .sidebar {
+        width: 100%; /* Expand sidebar */
+        height: auto;
+        position: static;
+        display: flex; /* Display in row */
+        overflow-x: scroll; /* Scrollable */
+    }
+    .sidebar.expanded {
+        width: 100%;
+    }
+}
