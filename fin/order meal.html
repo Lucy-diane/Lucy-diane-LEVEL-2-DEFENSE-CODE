@@ -4,7 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodMeal POS</title>
-    <link rel="stylesheet" href="order m.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            transition: width 0.3s ease; /* Smooth transition for width */
+            overflow: hidden; /* Hide content when sidebar collapses */
+        }
+        .sidebar.collapsed {
+            width: 60px; /* Shrink the sidebar */
+        }
+        .menu-item {
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            white-space: nowrap; /* Prevent text wrap */
+        }
+        .menu-item i {
+            margin-right: 10px;
+            transition: transform 0.3s ease; /* Smooth icon rotation */
+        }
+        .sidebar.collapsed .menu-item i {
+            transform: rotate(90deg); /* Rotate icons in collapsed state */
+        }
+        .sidebar.collapsed .menu-item span {
+            display: none; /* Hide text in collapsed state */
+        }
+        .menu-item:hover {
+            background-color: #444;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f9f9f9;
+            transition: margin-left 0.3s ease;
+        }
+        .expanded .main-content {
+            margin-left: 140px; /* Adjust content margin when sidebar is collapsed */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-bar {
+            padding: 8px;
+            width: 200px;
+        }
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        .cart-notification {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 12px;
+            display: block;
+        }
+        .banner {
+            background-color: #e0f7fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .dishes-grid {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .dish-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: calc(33% - 10px);
+            cursor: pointer;
+            text-align: center;
+        }
+        .add-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .add-btn:hover {
+            background-color: #0056b3;
+        }
+        .order-popup, .customization-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            z-index: 1000;
+        }
+        .close-popup {
+            cursor: pointer;
+            color: #999;
+            float: right;
+            font-size: 20px;
+        }
+        .submit-order {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-order:hover {
+            background-color: #218838;
+        }
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar with menu items -->
@@ -144,9 +282,8 @@
         }
 
         function submitOrder() {
-            orderItems = [];
-            updateCartNotification();
             alert('Order submitted successfully!');
+            document.getElementById('orderPopup').classList.remove('show');
         }
 
         function filterDishes() {
@@ -187,7 +324,7 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
-            sidebar.classList.toggle('expanded');
+            sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         }
 
@@ -201,6 +338,5 @@
 
         window.onload = renderDishes;
     </script>
-
 </body>
 </html>
