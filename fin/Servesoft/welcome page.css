@@ -62,7 +62,7 @@ body::after {
 /* Subtle hover effect */
 .button-container button:hover {
     background-color: rgba(255, 255, 255, 0.4); /* Slightly brighter on hover */
-    color: #6a43e0; /* Dark blue text on hover */
+    color: #ff7f62; /* Dark blue text on hover */
     transform: translateY(-3px); /* Subtle lift on hover */
     box-shadow: 0 8px 15px rgba(255, 255, 255, 0.4); /* Softer shadow on hover */
 }

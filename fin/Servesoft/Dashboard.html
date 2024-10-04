@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodISlice</title>
+    <style>
+        /* ... (previous styles remain the same) ... */
+        .cart {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+        .cart h3 {
+            margin-top: 0;
+        }
+        .cart-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+        }
+        .payment-options button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .order-status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffe4e1;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (previous content remains the same) ... -->
+    
+    <div class="cart" id="cart">
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <div class="payment-options" id="paymentOptions" style="display: none;">
+            <h4>Payment Options</h4>
+            <button onclick="processPayment('Credit Card')">Credit Card</button>
+            <button onclick="processPayment('PayPal')">PayPal</button>
+            <button onclick="processPayment('Cash on Delivery')">Cash on Delivery</button>
+        </div>
+        <div class="order-status" id="orderStatus" style="display: none;"></div>
+    </div>
+
+    <script>
+        // ... (previous JavaScript code) ...
+
+        let cartItems = [];
+        let currentUser = null;
+
+        function preOrder(dishName, price) {
+            if (!currentUser) {
+                // Redirect to registration page if user is not logged in
+                window.location.href = 'userregistration.html';
+                return;
+            }
+            
+            cartItems.push({ name: dishName, price: price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsElement = document.getElementById('cartItems');
+            cartItemsElement.innerHTML = '';
+            let total = 0;
+            
+            cartItems.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.textContent = `${item.name} - $${item.price}`;
+                cartItemsElement.appendChild(itemElement);
+                total += item.price;
+            });
+
+            const totalElement = document.createElement('div');
+            totalElement.className = 'cart-item';
+            totalElement.textContent = `Total: $${total.toFixed(2)}`;
+            cartItemsElement.appendChild(totalElement);
+
+            document.getElementById('paymentOptions').style.display = 'block';
+        }
+
+        function processPayment(method) {
+            // Here you would typically send the order to a backend service
+            // For now, we'll just update the order status
+            const orderStatus = document.getElementById('orderStatus');
+            orderStatus.style.display = 'block';
+            orderStatus.textContent = `Order placed successfully! Payment method: ${method}`;
+            
+            // Clear the cart
+            cartItems = [];
+            updateCart();
+            document.getElementById('paymentOptions').style.display = 'none';
+        }
+
+        // Check if user is logged in (you'd typically do this by checking a session or token)
+        function checkLoginStatus() {
+            // For demo purposes, we'll just check if there's a user in localStorage
+            const user = localStorage.getItem('currentUser');
+            if (user) {
+                currentUser = JSON.parse(user);
+                // You might want to update the UI to show the user is logged in
+            }
+        }
+
+        window.onload = () => {
+            renderCategories();
+            loadDishesFromLocalStorage();
+            checkLoginStatus();
+        };
+    </script>
+</body>
+</html>
