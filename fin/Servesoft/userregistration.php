@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "your_username";
 $password = "your_password";
-$dbname = "restaurant_app";
+$dbname = "SERVE_SOFT";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
