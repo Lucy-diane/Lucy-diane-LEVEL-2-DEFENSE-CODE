@@ -1,100 +1,166 @@
+/* Main page background */
 body {
-    background: linear-gradient(135deg, #4354E0 0%, #9943E0 100%);
+    background-color: #ce9f827b; /* Darker background */
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
 }
+
+/* Container for the form */
 .container {
     animation: fadeIn 1s ease-out;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
+
+/* Form styling with hover effect */
 .cg {
-    background: rgba(255, 255, 255, 0.1);
+    background: #fff3e070; /* Light Orange */
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px rgba(255, 140, 0, 0.1);
+    border: 1px solid #FFB74D; /* Lighter Orange */
     padding: 2rem;
     max-width: 400px;
     width: 100%;
     animation: slideUp 0.8s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    filter: blur(0); /* Remove blur from the form */
 }
+
+.cg:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(255, 140, 0, 0.2);
+}
+
+/* Image styling */
 .cg img {
     max-width: 100px;
     border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 140, 0, 0.2);
     animation: pulse 2s infinite;
 }
+
+/* Text and heading adjustments */
 h1 {
     font-family: 'Playfair Display', serif;
-    color: #ffffff;
+    color: #FF8C00; /* Dark Orange */
     margin-bottom: 1.5rem;
-    animation: fadeInDown 0.8s ease-out;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
     font-weight: 700;
     letter-spacing: 1px;
+    animation: fadeInDown 0.8s ease-out;
+    text-shadow: 1px 1px 2px rgba(255, 140, 0, 0.1);
+    font-size: 2.5rem;
 }
+
+p {
+    font-family: 'Playfair Display', serif;
+    color: #333333;
+}
+
+/* Form control styling */
 .form-control {
     border-radius: 20px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
+    border: 1px solid #FFB74D; /* Lighter Orange */
+    background-color: #ffffff;
+    color: #333333;
+    padding: 10px 15px;
     transition: all 0.3s ease;
     font-weight: 300;
 }
+
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(0, 0, 0, 0.5);
 }
+
 .form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
-    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 0.2rem rgba(255, 140, 0, 0.25);
+    background-color: #ffffff;
 }
+
+/* Button styling */
 .btn-primary {
     border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #FF8C00; /* Dark Orange */
     border: none;
+    padding: 10px 20px;
     transition: all 0.3s ease;
     color: #ffffff;
     font-weight: 600;
     letter-spacing: 0.5px;
 }
+
 .btn-primary:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #FFA500; /* Orange */
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
 }
+
 .btn-primary a {
     color: white;
     text-decoration: none;
 }
-label {
-    color: #ffffff;
-    font-weight: 400;
-}
-.my-2 {
-    color: #ffffff;
-    font-weight: 400;
 
+/* Label styling */
+label {
+    color: #333333;
+    font-weight: 400;
+    font-size: 1rem;
 }
+
+/* Additional text adjustments */
+.my-2 {
+    color: #333333;
+    font-weight: 300;
+}
+
+/* Signup button styling */
+.signup-btn {
+    background-color: #ffa500; /* Lighter Orange */
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.signup-btn:hover {
+    background-color: #FFA500; /* Orange */
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 140, 0, 0.2);
+}
+
+/* Animation keyframes remain the same */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
 @keyframes slideUp {
     from { transform: translateY(50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
 @keyframes fadeInDown {
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
+
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
+
+/* Button container adjustments */
 .button-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
+
 .button-container .btn {
     width: 48%;
 }

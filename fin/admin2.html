@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodISlice Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6347;
+        }
+        .admin-panel {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            display: grid;
+            gap: 10px;
+        }
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff4500;
+        }
+        #dishList {
+            margin-top: 20px;
+        }
+        .dish-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🍔 foodislice Admin</div>
+    </div>
+    <div class="admin-panel">
+        <h2>Add New Dish</h2>
+        <form id="addDishForm">
+            <input type="text" id="dishName" placeholder="Dish Name" required>
+            <input type="number" id="dishPrice" placeholder="Price" required>
+            <input type="text" id="dishImage" placeholder="Image URL" required>
+            <select id="dishCategory" required>
+                <option value="">Select Category</option>
+                <option value="Rice">Rice</option>
+                <option value="Chicken">Chicken</option>
+                <option value="Traditional meal">Traditional meal</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Burger">Burger</option>
+            </select>
+            <button type="submit">Add Dish</button>
+        </form>
+    </div>
+    <div id="dishList">
+        <h2>Current Dishes</h2>
+        <!-- Dishes will be listed here -->
+    </div>
+
+    <script>
+        let dishes = [];
+
+        document.getElementById('addDishForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('dishName').value;
+            const price = parseFloat(document.getElementById('dishPrice').value);
+            const image = document.getElementById('dishImage').value;
+            const category = document.getElementById('dishCategory').value;
+
+            if (name && price && image && category) {
+                const newDish = { name, price, image, category };
+                dishes.push(newDish);
+                updateDishList();
+                saveDishesToLocalStorage();
+                this.reset();
+                alert('Dish added successfully!');
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+
+        function updateDishList() {
+            const dishList = document.getElementById('dishList');
+            dishList.innerHTML = '<h2>Current Dishes</h2>';
+            dishes.forEach((dish, index) => {
+                const dishItem = document.createElement('div');
+                dishItem.className = 'dish-item';
+                dishItem.innerHTML = `
+                    <p><strong>${dish.name}</strong> - $${dish.price} (${dish.category})</p>
+                    <button onclick="removeDish(${index})">Remove</button>
+                `;
+                dishList.appendChild(dishItem);
+            });
+        }
+
+        function removeDish(index) {
+            dishes.splice(index, 1);
+            updateDishList();
+            saveDishesToLocalStorage();
+        }
+
+        function saveDishesToLocalStorage() {
+            localStorage.setItem('dishes', JSON.stringify(dishes));
+        }
+
+        function loadDishesFromLocalStorage() {
+            const storedDishes = localStorage.getItem('dishes');
+            if (storedDishes) {
+                dishes = JSON.parse(storedDishes);
+                updateDishList();
+            }
+        }
+
+        window.onload = loadDishesFromLocalStorage;
+    </script>
+</body>
+</html>
